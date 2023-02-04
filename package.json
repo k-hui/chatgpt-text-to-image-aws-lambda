@@ -1,7 +1,7 @@
 {
-  "name": "chatgpt-aws-lambda",
+  "name": "chatgpt-text-to-image-aws-lambda",
   "version": "1.0.0",
-  "description": "ChatGPT by Serverless Framework",
+  "description": "ChatGPT Text to Image by Serverless Framework",
   "scripts": {
     "start": "sls offline --noPrependStageInUrl",
     "deploy": "sls deploy -s dev",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/k-hui/chatgpt-aws-lambda.git"
+    "url": "git+https://github.com/k-hui/chatgpt-text-to-image-aws-lambda.git"
   },
   "author": "Key Hui",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/k-hui/chatgpt-aws-lambda/issues"
+    "url": "https://github.com/k-hui/chatgpt-text-to-image-aws-lambda/issues"
   },
-  "homepage": "https://github.com/k-hui/chatgpt-aws-lambda#readme",
+  "homepage": "https://github.com/k-hui/chatgpt-text-to-image-aws-lambda#readme",
   "devDependencies": {
     "serverless": "^3.26.0",
     "serverless-offline": "^12.0.4",

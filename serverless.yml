@@ -1,4 +1,4 @@
-service: chatgpt-aws-lambda
+service: chatgpt-text-to-image-aws-lambda
 
 frameworkVersion: "3"
 useDotenv: true
