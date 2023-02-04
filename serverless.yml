@@ -9,7 +9,7 @@ provider:
   region: us-east-1
   profile: ${env:PROFILE} # Read env variable
   memorySize: 128
-  timeout: 15
+  timeout: 25
   environment:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
 
