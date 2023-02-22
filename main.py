@@ -15,7 +15,7 @@ app = FastAPI()
 class ChatModel(BaseModel):
     model: Union[str, None] = 'text-davinci-003'
     prompt: str
-    temperature: Union[float, None] = 0.7
+    temperature: Union[float, None] = 1.0
 
 
 class ImageModel(ChatModel):
@@ -49,12 +49,12 @@ async def chat(model: ImageModel):
         prompt=model.prompt,
         temperature=model.temperature,
         max_tokens=1024,
-        top_p=1.0,
+        top_p=0.1,
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
     result: str = response.choices[0].text
-    result = result.removeprefix('\n\n')
+    result = result.replace('\n\n', '')
     result_image = text_to_image(result, model.width, model.height)
     return {'result': result, 'image': result_image}
 

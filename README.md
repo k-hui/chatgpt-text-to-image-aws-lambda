@@ -53,7 +53,7 @@ sls offline
 ### Test
 
 ```bash
-sh test.sh
+sh test-2.sh
 
 # example 1
 curl -d '{"prompt":"Hello, how are you today?"}' \
