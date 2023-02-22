@@ -18,11 +18,19 @@ class ChatModel(BaseModel):
     temperature: Union[float, None] = 0.7
 
 
-def text_to_image(prompt: str):
+class ImageModel(ChatModel):
+    """
+    allow ['256x256', '512x512', '1024x1024']
+    """
+    width: int = 1024
+    height: int = 1024
+
+
+def text_to_image(prompt: str, width: int, height: int):
     response = openai.Image.create(
         prompt=prompt,
         n=1,
-        size="1024x1024"
+        size=f'{width}x{height}'
     )
     image_url = response['data'][0]['url']
     print(image_url)
@@ -34,18 +42,27 @@ async def root():
     return {'version': '1.0.0'}
 
 
-@app.post('/')
-async def chat(model: ChatModel):
-    print(model)
+@app.post('/chat')
+async def chat(model: ImageModel):
     response = openai.Completion.create(
         model=model.model,
         prompt=model.prompt,
-        temperature=model.temperature
+        temperature=model.temperature,
+        max_tokens=1024,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
     )
     result: str = response.choices[0].text
     result = result.removeprefix('\n\n')
-    image = text_to_image(result)
-    return {'result': result, 'image': image}
+    result_image = text_to_image(result, model.width, model.height)
+    return {'result': result, 'image': result_image}
+
+
+@app.post('/image')
+async def image(model: ImageModel):
+    result_image = text_to_image(model.prompt, model.width, model.height)
+    return {'image': result_image}
 
 
 # Wrapper for lambda
