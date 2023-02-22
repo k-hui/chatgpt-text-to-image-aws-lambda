@@ -34,16 +34,15 @@ functions:
           - PythonRequirementsLambdaLayer
     events:
       - httpApi:
-          method: get
-          path: /
-      - httpApi:
-          method: any
-          path: /{proxy+}
+          method: '*'
+          path: '*'
 
 plugins:
   - serverless-offline
   - serverless-python-requirements
 
 custom:
+  serverless-offline:
+    httpPort: 8000
   pythonRequirements:
     layer: true

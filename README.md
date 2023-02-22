@@ -47,7 +47,7 @@ sls plugin install -n serverless-python-requirements
 # without serverless  offline
 uvicorn main:app --reload
 # with serverless offline
-sls offline --noPrependStageInUrl
+sls offline
 ```
 
 ### Test
@@ -58,10 +58,10 @@ sh test.sh
 # example 1
 curl -d '{"prompt":"Hello, how are you today?"}' \
   -H "Content-Type: application/json" \
-  -X POST http://localhost:3000
+  -X POST http://localhost:8000
 
 # example 2
 curl -d '{"prompt":"Hello, how are you today?","model":"text-davinci-002","temperature":0.5}' \
   -H "Content-Type: application/json" \
-  -X POST http://localhost:3000
+  -X POST http://localhost:8000
 ```
