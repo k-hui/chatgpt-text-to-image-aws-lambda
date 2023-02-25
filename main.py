@@ -26,7 +26,7 @@ class ImageModel(ChatModel):
     height: int = 1024
 
 
-def text_to_image(prompt: str, width: int, height: int):
+def text_to_image(prompt: str, width: int = 1024, height: int = 1024):
     response = openai.Image.create(
         prompt=prompt,
         n=1,
@@ -48,13 +48,13 @@ async def chat(model: ImageModel):
         model=model.model,
         prompt=model.prompt,
         temperature=model.temperature,
-        max_tokens=1024,
+        max_tokens=512,
         top_p=0.1,
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
     result: str = response.choices[0].text
-    result = result.replace('\n\n', '')
+    result = result.replace('\n\n', '\n')
     result_image = text_to_image(result, model.width, model.height)
     return {'result': result, 'image': result_image}
 
@@ -63,6 +63,27 @@ async def chat(model: ImageModel):
 async def image(model: ImageModel):
     result_image = text_to_image(model.prompt, model.width, model.height)
     return {'image': result_image}
+
+
+@app.post('/top_results')
+async def top_results(model: ChatModel):
+    response = openai.Completion.create(
+        model=model.model,
+        prompt=model.prompt,
+        temperature=model.temperature,
+        max_tokens=512,
+        top_p=0.1,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+    )
+    result: str = response.choices[0].text
+    prompts = result.removeprefix('\n\n').split('\n\n')
+    print(prompts)
+    images = []
+    for p in prompts:
+        result_image = text_to_image(p)
+        images.append(result_image)
+    return {'prompts': prompts, 'images': images}
 
 
 # Wrapper for lambda
